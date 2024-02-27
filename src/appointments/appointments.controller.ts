@@ -1,7 +1,10 @@
 import { Controller, Get, Patch, Post, Delete, Param } from '@nestjs/common';
+import { AppointmentsService } from './appointments.service';
 
 @Controller('appointments')
 export class AppointmentsController {
+  constructor(private appointmentService: AppointmentsService) {}
+
   @Get(':userId')
   getAppointments(@Param('userId') userId: string) {
     return `all appointments for user id ${userId}`;
