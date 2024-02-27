@@ -1,15 +1,13 @@
 import { Controller, Get, Post, Patch, Param } from '@nestjs/common';
+import { ReportsService } from './reports.service';
 
 @Controller('reports')
 export class ReportsController {
+  constructor(private reportsService: ReportsService) {}
+
   @Get(':appoinmentId')
   getReport(@Param('appoinmentId') appoinmentId: string) {
-    return `report for appoinment ${appoinmentId}`;
-  }
-
-  @Get('pet/:petId')
-  getReportsForPet(@Param('petId') petId: string) {
-    return `reports for pet with id ${petId}`;
+    return this.reportsService.findReport(appoinmentId);
   }
 
   @Post()
