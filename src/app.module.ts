@@ -5,6 +5,9 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { ReportsModule } from './reports/reports.module';
 import { InvoicesModule } from './invoices/invoices.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import databaseConfig from './config/databaseConfig';
+import { TypeormConfig } from './config/TypeormConfig.service';
 
 @Module({
   imports: [
@@ -14,9 +17,11 @@ import { ConfigModule } from '@nestjs/config';
     ReportsModule,
     InvoicesModule,
     ConfigModule.forRoot({
-      envFilePath: `${process.env.NODE_ENV}.env`,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
       isGlobal: true,
+      load: [databaseConfig],
     }),
+    TypeOrmModule.forRootAsync({ useClass: TypeormConfig }),
   ],
   controllers: [],
   providers: [],

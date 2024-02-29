@@ -32,3 +32,6 @@
 **/dist
 LICENSE
 README.md
+.env.production
+.env.development
+.env.test
