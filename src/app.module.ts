@@ -4,6 +4,7 @@ import { PetsModule } from './pets/pets.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { ReportsModule } from './reports/reports.module';
 import { InvoicesModule } from './invoices/invoices.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -12,6 +13,10 @@ import { InvoicesModule } from './invoices/invoices.module';
     AppointmentsModule,
     ReportsModule,
     InvoicesModule,
+    ConfigModule.forRoot({
+      envFilePath: `${process.env.NODE_ENV}.env`,
+      isGlobal: true,
+    }),
   ],
   controllers: [],
   providers: [],
