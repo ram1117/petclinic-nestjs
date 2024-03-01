@@ -7,6 +7,7 @@ const databaseConfig = () => ({
     migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
     migrationsRun: true,
     retryAttempts: 2,
+    seeds: [],
   },
 });
 export default databaseConfig;

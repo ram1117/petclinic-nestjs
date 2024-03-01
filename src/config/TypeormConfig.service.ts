@@ -8,6 +8,6 @@ export class TypeormConfig implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    return this.configService.get('database') as TypeOrmModuleOptions;
+    return this.configService.get('database');
   }
 }

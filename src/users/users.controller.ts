@@ -5,8 +5,8 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
   @Get(':id')
-  getUser() {
-    return this.usersService.findUser();
+  getUser(@Param('id') id: string) {
+    return this.usersService.findUser(id);
   }
 
   @Post()
