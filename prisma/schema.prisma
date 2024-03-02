@@ -38,6 +38,4 @@ model PetType {
   id        String   @unique @default(uuid())
   type      String
   pets      Pet[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
