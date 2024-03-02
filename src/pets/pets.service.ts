@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { PetEntity } from './entities/pet.entity';
 
 @Injectable()
 export class PetsService {
-  getPets(userId: string) {
-    return [{ id: userId, name: 'Micky', type: 'cat', breed: 'persian' }];
-  }
-  createPet() {
-    return { id: 1, name: 'Micky', type: 'cat', breed: 'persian' };
-  }
+  constructor(private db: PrismaService) {}
 
-  updatePet(id: string) {
-    return { id: id, name: 'Micky', type: 'cat', breed: 'persian' };
+  async getPets(userId: string) {
+    const pets = await this.db.pet.findMany({
+      where: { ownerId: userId },
+      include: { petType: true },
+    });
+
+    return pets.map((pet) => new PetEntity(pet));
+  }
+  async createPet(data: any) {
+    const pet = await this.db.pet.create({ data: data });
+    return new PetEntity(pet);
   }
 }

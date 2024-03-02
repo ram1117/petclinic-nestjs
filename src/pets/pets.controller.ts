@@ -1,20 +1,17 @@
-import { Controller, Get, Post, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { PetsService } from './pets.service';
+import { CreatePetDto } from './dtos/createPet.dto';
 
 @Controller('pets')
 export class PetsController {
   constructor(private petsService: PetsService) {}
 
-  @Get()
-  getAllPets() {
-    return this.petsService.getPets('1');
+  @Get(':userId')
+  getAllPets(@Param('userId') userId: string) {
+    return this.petsService.getPets(userId);
   }
   @Post()
-  createPet() {
-    return this.petsService.createPet();
-  }
-  @Patch(':id')
-  updatePet(@Param('id') id: string) {
-    return this.petsService.updatePet(id);
+  createPet(@Body() data: CreatePetDto) {
+    return this.petsService.createPet(data);
   }
 }
