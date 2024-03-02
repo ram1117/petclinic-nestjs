@@ -5,6 +5,9 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { ReportsModule } from './reports/reports.module';
 import { InvoicesModule } from './invoices/invoices.module';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaExceptionFilter } from './prisma-exception-filter/prisma-exception.filter';
+import { APP_FILTER } from '@nestjs/core';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -17,8 +20,9 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: `.env.${process.env.NODE_ENV}`,
       isGlobal: true,
     }),
+    PrismaModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [{ provide: APP_FILTER, useClass: PrismaExceptionFilter }],
 })
 export class AppModule {}
