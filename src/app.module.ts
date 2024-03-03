@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaExceptionFilter } from './prisma-exception-filter/prisma-exception.filter';
 import { APP_FILTER } from '@nestjs/core';
 import { PrismaModule } from './prisma/prisma.module';
+import { DoctorsModule } from './doctors/doctors.module';
+import { TreatmentModule } from './treatment/treatment.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { PrismaModule } from './prisma/prisma.module';
       isGlobal: true,
     }),
     PrismaModule,
+    DoctorsModule,
+    TreatmentModule,
   ],
   controllers: [],
   providers: [{ provide: APP_FILTER, useClass: PrismaExceptionFilter }],

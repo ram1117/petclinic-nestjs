@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -14,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id        String   @unique @default(uuid())
+  id        String   @id @default(uuid())
   fullname  String
   email     String   @unique
   password  String
@@ -24,7 +25,7 @@ model User {
 }
 
 model Pet {
-  id        String   @unique @default(uuid())
+  id        String   @id @default(uuid())
   name      String
   ownerId   String
   petTypeId String
@@ -35,7 +36,33 @@ model Pet {
 }
 
 model PetType {
-  id        String   @unique @default(uuid())
-  type      String
-  pets      Pet[]
+  id   String @id @default(uuid())
+  type String
+  pets Pet[]
+}
+
+model Doctor {
+  id         String                @id @default(uuid())
+  name       String                @unique
+  degree     String
+  experience Int
+  about      String
+  treatments TreatmentsOnDoctors[]
+}
+
+model Treatment {
+  id          String                @id @default(uuid())
+  title       String                @unique
+  description String
+  price       Float
+  doctors     TreatmentsOnDoctors[]
+}
+
+model TreatmentsOnDoctors {
+  doctorId    String
+  doctor      Doctor    @relation(fields: [doctorId], references: [id])
+  treatmentId String
+  treatment   Treatment @relation(fields: [treatmentId], references: [id])
+
+  @@id([doctorId, treatmentId])
 }
