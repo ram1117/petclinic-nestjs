@@ -51,6 +51,8 @@ model Doctor {
   about       String
   treatments  TreatmentsOnDoctors[]
   Appointment Appointment[]
+  slots       Slot[]
+  workDays    WorkDay[]
 }
 
 model Treatment {
@@ -73,7 +75,8 @@ model TreatmentsOnDoctors {
 
 model Appointment {
   id          String    @id @default(uuid())
-  date        DateTime
+  slotId      String    @unique
+  slot        Slot      @relation(fields: [slotId], references: [id])
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   petId       String
@@ -82,4 +85,20 @@ model Appointment {
   doctor      Doctor    @relation(fields: [doctorId], references: [id])
   treatmentId String
   treatment   Treatment @relation(fields: [treatmentId], references: [id])
+}
+
+model Slot {
+  id          String       @id @default(uuid())
+  slot        DateTime
+  doctorId    String
+  doctor      Doctor       @relation(fields: [doctorId], references: [id])
+  available   Boolean      @default(true)
+  Appointment Appointment?
+}
+
+model WorkDay {
+  id       String @id @default(uuid())
+  day      Int
+  doctorId String
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
 }

@@ -1,5 +1,5 @@
 import { PrismaClient } from '.prisma/client';
-import { petType, treatmentData } from './seedData';
+import { petType, treatmentData, workDays } from './seedData';
 interface treatmentDataType {
   title: string;
   description: string;
@@ -50,6 +50,12 @@ const main = async () => {
   await prisma.$transaction(
     treatmentData.map((data) => generateTreatmentData(data)),
   );
+
+  workDays.forEach(async (item) => {
+    await prisma.workDay.createMany({
+      data: item.days.map((day) => ({ doctorId: item.doctorId, day })),
+    });
+  });
 };
 
 main()

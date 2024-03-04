@@ -9,13 +9,19 @@ export class DoctorsService {
     const docData = await this.db.doctor.findMany({
       include: {
         treatments: { include: { treatment: true } },
+        workDays: true,
       },
     });
 
     const result = docData.map((doc) => ({
       ...doc,
       treatments: doc.treatments.map((treatment) => treatment.treatment.title),
+      workDays: doc.workDays.map((day) => day.day),
     }));
     return result;
+  }
+
+  async getSlots(id: string) {
+    return await this.db.slot.findMany({ where: { doctorId: id } });
   }
 }

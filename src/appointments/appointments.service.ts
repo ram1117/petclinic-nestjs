@@ -17,6 +17,11 @@ export class AppointmentsService {
   }
 
   async createAppointment(data: CreateAppointMentDto) {
+    console.log(data);
+    await this.repo.slot.update({
+      where: { id: data.slotId },
+      data: { available: false },
+    });
     return await this.repo.appointment.create({ data });
   }
 
@@ -28,6 +33,7 @@ export class AppointmentsService {
         user: true,
         doctor: true,
         treatment: true,
+        slot: true,
       },
     });
     return new AppointmentEntity(appt);
@@ -46,6 +52,11 @@ export class AppointmentsService {
   }
 
   async deleteAppointment(id: string) {
+    const apptmnt = await this.repo.appointment.findUnique({ where: { id } });
+    await this.repo.slot.update({
+      where: { id: apptmnt.slotId },
+      data: { available: true },
+    });
     return await this.repo.appointment.delete({ where: { id } });
   }
 }

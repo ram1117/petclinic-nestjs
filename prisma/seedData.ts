@@ -87,3 +87,11 @@ export const treatmentData = [
     doctors: [vetData[0], vetData[1], vetData[2]],
   },
 ];
+
+export const workDays = [
+  { doctorId: '3f36a3c6-6c1e-4934-b13a-8b048342bf61', days: [1, 3] },
+  { doctorId: '9f4e0a29-e8a4-4dbf-af7c-ff5aece0b3e7', days: [2, 4] },
+  { doctorId: '764d5c72-0e7c-4cb5-b2e1-d810e051c22b', days: [3, 4] },
+  { doctorId: 'a49724c2-89dc-4621-b422-f0b76f94354d', days: [2, 5] },
+  { doctorId: 'd53ee96a-3db5-4960-8919-154e25bf73cc', days: [1, 5] },
+];

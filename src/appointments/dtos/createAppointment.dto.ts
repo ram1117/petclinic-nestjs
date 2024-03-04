@@ -1,5 +1,4 @@
-import { Transform } from 'class-transformer';
-import { IsString, IsDate } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateAppointMentDto {
   @IsString()
@@ -10,7 +9,6 @@ export class CreateAppointMentDto {
   treatmentId: string;
   @IsString()
   petId: string;
-  @Transform(({ value }) => new Date(value))
-  @IsDate()
-  date: Date;
+  @IsString()
+  slotId: string;
 }

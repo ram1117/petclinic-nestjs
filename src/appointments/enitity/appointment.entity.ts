@@ -11,7 +11,7 @@ export class AppointmentEntity implements Appointment {
   }
 
   id: string;
-  date: Date;
+  slotId: string;
   @Exclude()
   userId: string;
   @Exclude()

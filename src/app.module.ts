@@ -10,6 +10,8 @@ import { APP_FILTER } from '@nestjs/core';
 import { PrismaModule } from './prisma/prisma.module';
 import { DoctorsModule } from './doctors/doctors.module';
 import { TreatmentModule } from './treatment/treatment.module';
+import { SlotsService } from './slots/slots.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -25,8 +27,12 @@ import { TreatmentModule } from './treatment/treatment.module';
     PrismaModule,
     DoctorsModule,
     TreatmentModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [],
-  providers: [{ provide: APP_FILTER, useClass: PrismaExceptionFilter }],
+  providers: [
+    { provide: APP_FILTER, useClass: PrismaExceptionFilter },
+    SlotsService,
+  ],
 })
 export class AppModule {}
