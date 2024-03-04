@@ -1,17 +1,61 @@
 import { PrismaClient } from '.prisma/client';
+import { petType, treatmentData, workDays } from './seedData';
+interface treatmentDataType {
+  title: string;
+  description: string;
+  price: number;
+  doctors: {
+    id: string;
+    name: string;
+    degree: string;
+    experience: number;
+    about: string;
+  }[];
+}
 
 const prisma = new PrismaClient();
 
-const petType = [
-  { type: 'Dog' },
-  { type: 'Cat' },
-  { type: 'Reptile' },
-  { type: 'Bird' },
-  { type: 'Others' },
-];
+const generateTreatmentData = (data: treatmentDataType) => {
+  return prisma.treatment.create({
+    data: {
+      title: data.title,
+      description: data.description,
+      price: data.price,
+      doctors: {
+        create: data.doctors.map((doc) => {
+          return {
+            doctor: {
+              connectOrCreate: {
+                where: { name: doc.name },
+                create: {
+                  ...doc,
+                },
+              },
+            },
+          };
+        }),
+      },
+    },
+  });
+};
 
 const main = async () => {
+  await prisma.petType.deleteMany();
+  await prisma.treatmentsOnDoctors.deleteMany();
+  await prisma.treatment.deleteMany();
+  await prisma.doctor.deleteMany();
+
   await prisma.petType.createMany({ data: petType });
+
+  await prisma.$transaction(
+    treatmentData.map((data) => generateTreatmentData(data)),
+  );
+
+  workDays.forEach(async (item) => {
+    await prisma.workDay.createMany({
+      data: item.days.map((day) => ({ doctorId: item.doctorId, day })),
+    });
+  });
 };
 
 main()

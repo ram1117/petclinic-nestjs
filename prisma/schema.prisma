@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -14,28 +15,90 @@ datasource db {
 }
 
 model User {
-  id        String   @unique @default(uuid())
-  fullname  String
-  email     String   @unique
-  password  String
-  pets      Pet[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String        @id @default(uuid())
+  fullname    String
+  email       String        @unique
+  password    String
+  pets        Pet[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  appoinments Appointment[]
 }
 
 model Pet {
-  id        String   @unique @default(uuid())
-  name      String
-  ownerId   String
-  petTypeId String
-  owner     User     @relation(fields: [ownerId], references: [id])
-  petType   PetType  @relation(fields: [petTypeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String        @id @default(uuid())
+  name        String
+  ownerId     String
+  petTypeId   String
+  owner       User          @relation(fields: [ownerId], references: [id])
+  petType     PetType       @relation(fields: [petTypeId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  appoinments Appointment[]
 }
 
 model PetType {
-  id        String   @unique @default(uuid())
-  type      String
-  pets      Pet[]
+  id   String @id @default(uuid())
+  type String
+  pets Pet[]
+}
+
+model Doctor {
+  id          String                @id @default(uuid())
+  name        String                @unique
+  degree      String
+  experience  Int
+  about       String
+  treatments  TreatmentsOnDoctors[]
+  Appointment Appointment[]
+  slots       Slot[]
+  workDays    WorkDay[]
+}
+
+model Treatment {
+  id          String                @id @default(uuid())
+  title       String                @unique
+  description String
+  price       Float
+  doctors     TreatmentsOnDoctors[]
+  Appointment Appointment[]
+}
+
+model TreatmentsOnDoctors {
+  doctorId    String
+  doctor      Doctor    @relation(fields: [doctorId], references: [id])
+  treatmentId String
+  treatment   Treatment @relation(fields: [treatmentId], references: [id])
+
+  @@id([doctorId, treatmentId])
+}
+
+model Appointment {
+  id          String    @id @default(uuid())
+  slotId      String    @unique
+  slot        Slot      @relation(fields: [slotId], references: [id])
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  petId       String
+  pet         Pet       @relation(fields: [petId], references: [id])
+  doctorId    String
+  doctor      Doctor    @relation(fields: [doctorId], references: [id])
+  treatmentId String
+  treatment   Treatment @relation(fields: [treatmentId], references: [id])
+}
+
+model Slot {
+  id          String       @id @default(uuid())
+  slot        DateTime
+  doctorId    String
+  doctor      Doctor       @relation(fields: [doctorId], references: [id])
+  available   Boolean      @default(true)
+  Appointment Appointment?
+}
+
+model WorkDay {
+  id       String @id @default(uuid())
+  day      Int
+  doctorId String
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
 }

@@ -1,32 +1,44 @@
-import { Controller, Get, Patch, Post, Delete, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Delete,
+  Param,
+  Body,
+} from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
+import { CreateAppointMentDto } from './dtos/createAppointment.dto';
 
-@Controller('appointments')
+@Controller('appointment')
 export class AppointmentsController {
   constructor(private appointmentService: AppointmentsService) {}
 
-  @Get(':userId')
+  @Get('user/:userId')
   getAppointments(@Param('userId') userId: string) {
-    return `all appointments for user id ${userId}`;
+    return this.appointmentService.getAppointments(userId);
   }
 
-  @Get(':userId/appointment/:id')
-  getAppointment(@Param('userId') userId: string, @Param('id') id: string) {
-    return `user ${userId} appointment ${id}`;
+  @Get(':id')
+  getAppointment(@Param('id') id: string) {
+    return this.appointmentService.getAppointmentDetail(id);
   }
 
   @Post()
-  createAppoinment() {
-    return 'appointment created';
+  createAppoinment(@Body() body: CreateAppointMentDto) {
+    return this.appointmentService.createAppointment(body);
   }
 
   @Patch(':id')
-  updateAppoinment(@Param('id') id: string) {
-    return `updated appointment ${id}`;
+  updateAppoinment(
+    @Param('id') id: string,
+    @Body() body: Partial<CreateAppointMentDto>,
+  ) {
+    return this.appointmentService.updateAppoinmentDetail(id, body);
   }
 
   @Delete(':id')
   cancelAppoinment(@Param('id') id: string) {
-    return `appointment ${id} cancelled`;
+    return this.appointmentService.deleteAppointment(id);
   }
 }
