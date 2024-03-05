@@ -18,6 +18,7 @@ model User {
   id          String        @id @default(uuid())
   fullname    String
   email       String        @unique
+  username    String        @unique
   password    String
   pets        Pet[]
   createdAt   DateTime      @default(now())

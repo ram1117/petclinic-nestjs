@@ -12,6 +12,7 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { TreatmentModule } from './treatment/treatment.module';
 import { SlotsService } from './slots/slots.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     DoctorsModule,
     TreatmentModule,
     ScheduleModule.forRoot(),
+    AuthModule,
   ],
   controllers: [],
   providers: [
