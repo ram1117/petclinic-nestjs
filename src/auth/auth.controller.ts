@@ -10,7 +10,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   async signin(@Req() req: any) {
-    return req.user;
+    return this.authService.signinUser(req.user);
   }
   @Post('signup')
   async signup(@Body() data: CreateUserDto) {

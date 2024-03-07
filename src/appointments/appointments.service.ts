@@ -17,7 +17,6 @@ export class AppointmentsService {
   }
 
   async createAppointment(data: CreateAppointMentDto) {
-    console.log(data);
     await this.repo.slot.update({
       where: { id: data.slotId },
       data: { available: false },
