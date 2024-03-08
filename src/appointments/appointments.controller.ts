@@ -12,11 +12,11 @@ import { CreateAppointMentDto } from './dtos/createAppointment.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 
+@UseGuards(JwtAuthGuard)
 @Controller('appointment')
 export class AppointmentsController {
   constructor(private appointmentService: AppointmentsService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('user/:userId')
   getAppointments(@Param('userId') userId: string) {
     return this.appointmentService.getAppointments(userId);

@@ -3,9 +3,13 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { Inject } from '@nestjs/common';
 import { Request } from 'express';
+import { UsersService } from 'src/users/users.service';
 
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(@Inject(ConfigService) configService: ConfigService) {
+  constructor(
+    @Inject(ConfigService) configService: ConfigService,
+    private userService: UsersService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         JwtStrategy.extractJtw,
@@ -17,7 +21,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    return { id: payload.sub, username: payload.username };
+    const user = await this.userService.findbyId(payload.sub);
+    const { password, ...result } = user;
+    return { result };
   }
 
   private static extractJtw(req: Request) {

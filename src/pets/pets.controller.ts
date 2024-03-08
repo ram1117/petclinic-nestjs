@@ -10,11 +10,11 @@ export class PetsController {
 
   @Get()
   getAllPets(@Req() req: any) {
+    console.log(req.user);
     return this.petsService.getPets(req.user.id);
   }
   @Post()
   createPet(@Req() req: any, @Body() data: CreatePetDto) {
-    console.log(req.user);
     return this.petsService.createPet(req.user.id, data);
   }
 }

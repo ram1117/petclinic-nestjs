@@ -15,6 +15,13 @@ export class UsersService {
     return new UserEntity(user);
   }
 
+  async findbyId(id: string) {
+    const user = await this.db.user.findFirstOrThrow({
+      where: { id },
+    });
+    return new UserEntity(user);
+  }
+
   async createUser(body: CreateUserDto) {
     const user = await this.db.user.create({ data: body });
     return new UserEntity(user);
