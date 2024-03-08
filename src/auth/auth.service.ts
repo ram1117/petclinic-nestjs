@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/createUser.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -12,22 +15,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string) {
+  async signinUser(username: string, pass: string) {
     const user = await this.userService.findUser(username);
-    if (user) {
-      const isMatch = await bcrypt.compare(pass, user.password);
-      if (isMatch) {
-        // eslint-disable-next-line  @typescript-eslint/no-unused-vars
-        const { password, ...result } = user;
-        return result;
-      }
-    }
-    return null;
-  }
+    if (!user) throw new NotFoundException('User not found');
 
-  async signinUser(user: User) {
+    const isMatch = await bcrypt.compare(pass, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException('wrong username or password');
+    }
+    const { password, ...result } = user;
     const payload = { username: user.username, sub: user.id };
-    return { user: user, token: this.jwtService.sign(payload) };
+    return { user: result, token: this.jwtService.sign(payload) };
   }
 
   async signupUser(data: CreateUserDto) {

@@ -1,24 +1,18 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/createUser.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
+import { SignInDto } from './dtos/signin.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('signin')
-  async signin(@Req() req: any, @Res({ passthrough: true }) res: any) {
-    const { user, token } = await this.authService.signinUser(req.user);
+  async signin(@Body() data: SignInDto, @Res({ passthrough: true }) res: any) {
+    const { user, token } = await this.authService.signinUser(
+      data.username,
+      data.password,
+    );
     res.cookie('access_token', token, { httpOnly: true });
     return user;
   }
