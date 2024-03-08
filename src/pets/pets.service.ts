@@ -11,11 +11,14 @@ export class PetsService {
       where: { ownerId: userId },
       include: { petType: true },
     });
-
     return pets.map((pet) => new PetEntity(pet));
   }
   async createPet(id: string, data: any) {
     const pet = await this.db.pet.create({ data: { ...data, ownerId: id } });
     return new PetEntity(pet);
+  }
+
+  async getPetTypes() {
+    return await this.db.petType.findMany();
   }
 }
