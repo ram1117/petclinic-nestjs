@@ -18,7 +18,7 @@ import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 export class AppointmentsController {
   constructor(private appointmentService: AppointmentsService) {}
 
-  @Get('user/:userId')
+  @Get()
   getAppointments(@CurrentUser() user: any) {
     return this.appointmentService.getAppointments(user.id);
   }

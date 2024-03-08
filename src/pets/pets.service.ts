@@ -11,7 +11,6 @@ export class PetsService {
       where: { ownerId: userId },
       include: { petType: true },
     });
-
     return pets.map((pet) => new PetEntity(pet));
   }
   async createPet(id: string, data: any) {
