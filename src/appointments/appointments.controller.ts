@@ -12,7 +12,9 @@ import { CreateAppointMentDto } from './dtos/createAppointment.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { ApiCookieAuth } from '@nestjs/swagger';
 
+@ApiCookieAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('appointment')
 export class AppointmentsController {
