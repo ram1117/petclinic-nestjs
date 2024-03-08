@@ -14,8 +14,8 @@ export class PetsService {
 
     return pets.map((pet) => new PetEntity(pet));
   }
-  async createPet(data: any) {
-    const pet = await this.db.pet.create({ data: data });
+  async createPet(id: string, data: any) {
+    const pet = await this.db.pet.create({ data: { ...data, ownerId: id } });
     return new PetEntity(pet);
   }
 }

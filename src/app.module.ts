@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { PetsModule } from './pets/pets.module';
 import { AppointmentsModule } from './appointments/appointments.module';
@@ -12,6 +12,8 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { TreatmentModule } from './treatment/treatment.module';
 import { SlotsService } from './slots/slots.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from './auth/auth.module';
+import cookieParser from 'cookie-parser';
 
 @Module({
   imports: [
@@ -28,6 +30,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     DoctorsModule,
     TreatmentModule,
     ScheduleModule.forRoot(),
+    AuthModule,
   ],
   controllers: [],
   providers: [
@@ -35,4 +38,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     SlotsService,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(cookieParser()).forRoutes('*');
+  }
+}

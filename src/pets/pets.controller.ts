@@ -1,17 +1,20 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { CreatePetDto } from './dtos/createPet.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('pets')
 export class PetsController {
   constructor(private petsService: PetsService) {}
 
-  @Get(':userId')
-  getAllPets(@Param('userId') userId: string) {
-    return this.petsService.getPets(userId);
+  @Get()
+  getAllPets(@Req() req: any) {
+    console.log(req.user);
+    return this.petsService.getPets(req.user.id);
   }
   @Post()
-  createPet(@Body() data: CreatePetDto) {
-    return this.petsService.createPet(data);
+  createPet(@Req() req: any, @Body() data: CreatePetDto) {
+    return this.petsService.createPet(req.user.id, data);
   }
 }

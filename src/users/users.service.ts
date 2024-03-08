@@ -8,10 +8,16 @@ import { User } from '@prisma/client';
 export class UsersService {
   constructor(private db: PrismaService) {}
 
-  async findUser(email: string) {
-    console.log(email);
+  async findUser(username: string) {
     const user = await this.db.user.findFirstOrThrow({
-      where: { email: email },
+      where: { username },
+    });
+    return new UserEntity(user);
+  }
+
+  async findbyId(id: string) {
+    const user = await this.db.user.findFirstOrThrow({
+      where: { id },
     });
     return new UserEntity(user);
   }

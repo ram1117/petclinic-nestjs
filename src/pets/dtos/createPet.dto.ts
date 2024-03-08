@@ -6,8 +6,5 @@ export class CreatePetDto {
   name: string;
 
   @IsString()
-  ownerId: string;
-
-  @IsString()
   petTypeId: string;
 }

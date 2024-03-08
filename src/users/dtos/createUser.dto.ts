@@ -6,11 +6,13 @@ export class CreateUserDto {
 
   @IsEmail()
   email: string;
-
+  @IsString()
+  username: string;
   @IsString()
   @MinLength(8)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Password shouyld contain 1 capital, 1 special character',
+    message:
+      'Password should contain one capital, one special character and one number',
   })
   password: string;
 }

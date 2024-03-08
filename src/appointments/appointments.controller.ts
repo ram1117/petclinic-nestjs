@@ -9,7 +9,10 @@ import {
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointMentDto } from './dtos/createAppointment.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
+@UseGuards(JwtAuthGuard)
 @Controller('appointment')
 export class AppointmentsController {
   constructor(private appointmentService: AppointmentsService) {}
