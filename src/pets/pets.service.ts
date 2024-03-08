@@ -17,4 +17,8 @@ export class PetsService {
     const pet = await this.db.pet.create({ data: { ...data, ownerId: id } });
     return new PetEntity(pet);
   }
+
+  async getPetTypes() {
+    return await this.db.petType.findMany();
+  }
 }

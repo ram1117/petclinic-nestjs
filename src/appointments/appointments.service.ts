@@ -16,12 +16,14 @@ export class AppointmentsService {
     return apptmnts.map((appt) => new AppointmentEntity(appt));
   }
 
-  async createAppointment(data: CreateAppointMentDto) {
+  async createAppointment(id: string, data: CreateAppointMentDto) {
     await this.repo.slot.update({
       where: { id: data.slotId },
       data: { available: false },
     });
-    return await this.repo.appointment.create({ data });
+    return await this.repo.appointment.create({
+      data: { ...data, userId: id },
+    });
   }
 
   async getAppointmentDetail(id: string) {

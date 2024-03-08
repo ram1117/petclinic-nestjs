@@ -1,11 +1,7 @@
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateAppointMentDto {
-  @ApiProperty()
-  @IsString()
-  userId: string;
-
+export class UpdateAppointmentDto {
   @ApiProperty()
   @IsString()
   doctorId: string;
