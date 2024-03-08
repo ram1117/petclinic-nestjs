@@ -11,6 +11,7 @@ import { AppointmentsService } from './appointments.service';
 import { CreateAppointMentDto } from './dtos/createAppointment.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('appointment')
@@ -18,8 +19,8 @@ export class AppointmentsController {
   constructor(private appointmentService: AppointmentsService) {}
 
   @Get('user/:userId')
-  getAppointments(@Param('userId') userId: string) {
-    return this.appointmentService.getAppointments(userId);
+  getAppointments(@CurrentUser() user: any) {
+    return this.appointmentService.getAppointments(user.id);
   }
 
   @Get(':id')
