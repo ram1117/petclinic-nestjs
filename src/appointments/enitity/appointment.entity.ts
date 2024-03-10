@@ -1,9 +1,9 @@
 import { Appointment } from '@prisma/client';
 import { Expose, Type, Exclude } from 'class-transformer';
-import { DoctorEntity } from 'src/doctors/entity/doctor.entity';
-import { PetEntity } from 'src/pets/entities/pet.entity';
-import { TreatmentEntity } from 'src/treatment/entity/treatment.entity';
-import { UserEntity } from 'src/users/entities/user.entitiy';
+import { DoctorEntity } from '../../doctors/entity/doctor.entity';
+import { PetEntity } from '../../pets/entities/pet.entity';
+import { TreatmentEntity } from '../../treatment/entity/treatment.entity';
+import { UserEntity } from '../../users/entities/user.entitiy';
 
 export class AppointmentEntity implements Appointment {
   constructor(partial: Partial<AppointmentEntity>) {

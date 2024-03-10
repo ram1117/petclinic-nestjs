@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateAppointMentDto } from './dtos/createAppointment.dto';
 import { AppointmentEntity } from './enitity/appointment.entity';
 

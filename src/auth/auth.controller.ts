@@ -10,7 +10,7 @@ import {
 import { CreateUserDto } from '../users/dtos/createUser.dto';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dtos/signin.dto';
-import { ApiBody, ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
