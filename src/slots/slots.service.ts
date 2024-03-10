@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Cron } from '@nestjs/schedule';
 
 @Injectable()
@@ -10,6 +10,7 @@ export class SlotsService {
 
   @Cron('0 6 * * SUN')
   async createSlots() {
+    console.log(`creating slots on ${new Date()}`);
     // Slot timings for each day
     const time = [8, 10, 14];
 

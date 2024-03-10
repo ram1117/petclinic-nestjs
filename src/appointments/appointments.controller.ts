@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointMentDto } from './dtos/createAppointment.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
 import { ApiBody, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { UpdateAppointmentDto } from './dtos/updateAppointment.dto';
 
