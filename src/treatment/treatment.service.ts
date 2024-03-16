@@ -8,7 +8,7 @@ export class TreatmentService {
   async getTreatments() {
     const treatments = await this.repo.treatment.findMany({
       include: {
-        doctors: { include: { doctor: true } },
+        doctors: { include: { doctor: { include: { slots: true } } } },
       },
     });
 

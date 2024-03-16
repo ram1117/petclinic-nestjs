@@ -23,8 +23,8 @@ export class UsersService {
   }
 
   async createUser(body: CreateUserDto) {
-    const user = await this.db.user.create({ data: body });
-    return new UserEntity(user);
+    await this.db.user.create({ data: body });
+    return { statusCode: 201, message: 'User created successfully' };
   }
 
   async updateUser(id: string, data: Partial<User>) {
