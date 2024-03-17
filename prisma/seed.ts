@@ -51,11 +51,13 @@ const main = async () => {
     treatmentData.map((data) => generateTreatmentData(data)),
   );
 
-  workDays.forEach(async (item) => {
-    await prisma.workDay.createMany({
-      data: item.days.map((day) => ({ doctorId: item.doctorId, day })),
-    });
-  });
+  await prisma.$transaction(
+    workDays.map((item) => {
+      return prisma.workDay.createMany({
+        data: item.days.map((day) => ({ doctorId: item.doctorId, day })),
+      });
+    }),
+  );
 
   await prisma.slot.createMany({ data: slotsData });
 };
