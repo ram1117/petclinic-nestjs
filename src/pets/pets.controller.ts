@@ -5,19 +5,20 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
 import { ApiOperation } from '@nestjs/swagger';
 
-@UseGuards(JwtAuthGuard)
 @Controller('pets')
 export class PetsController {
   constructor(private petsService: PetsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ description: 'Endpoint to get all pets added by user' })
   @Get()
   getAllPets(@CurrentUser() user: any) {
     return this.petsService.getPets(user.id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ description: 'Endpoint to add a new pet by user' })
-  @Post()
+  @Post('new')
   createPet(@CurrentUser() user: any, @Body() data: CreatePetDto) {
     return this.petsService.createPet(user.id, data);
   }

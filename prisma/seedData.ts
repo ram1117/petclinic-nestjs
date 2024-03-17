@@ -88,6 +88,38 @@ export const treatmentData = [
   },
 ];
 
+const createDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toISOString();
+};
+
+export const slotsData = [
+  {
+    slot: createDate('2024-03-21 10:00'),
+    doctorId: '3f36a3c6-6c1e-4934-b13a-8b048342bf61',
+  },
+  {
+    slot: createDate('2024-03-21 08:00'),
+    doctorId: '3f36a3c6-6c1e-4934-b13a-8b048342bf61',
+  },
+  {
+    slot: createDate('2024-03-21 14:00'),
+    doctorId: '3f36a3c6-6c1e-4934-b13a-8b048342bf61',
+  },
+  {
+    slot: createDate('2024-03-20 14:00'),
+    doctorId: '9f4e0a29-e8a4-4dbf-af7c-ff5aece0b3e7',
+  },
+  {
+    slot: createDate('2024-03-20 08:00'),
+    doctorId: '9f4e0a29-e8a4-4dbf-af7c-ff5aece0b3e7',
+  },
+  {
+    slot: createDate('2024-03-20 14:00'),
+    doctorId: '9f4e0a29-e8a4-4dbf-af7c-ff5aece0b3e7',
+  },
+];
+
 export const workDays = [
   { doctorId: '3f36a3c6-6c1e-4934-b13a-8b048342bf61', days: [1, 3] },
   { doctorId: '9f4e0a29-e8a4-4dbf-af7c-ff5aece0b3e7', days: [2, 4] },

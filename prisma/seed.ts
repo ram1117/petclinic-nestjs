@@ -1,5 +1,5 @@
 import { PrismaClient } from '.prisma/client';
-import { petType, treatmentData, workDays } from './seedData';
+import { petType, treatmentData, workDays, slotsData } from './seedData';
 interface treatmentDataType {
   title: string;
   description: string;
@@ -56,6 +56,8 @@ const main = async () => {
       data: item.days.map((day) => ({ doctorId: item.doctorId, day })),
     });
   });
+
+  await prisma.slot.createMany({ data: slotsData });
 };
 
 main()

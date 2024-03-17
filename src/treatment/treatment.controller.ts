@@ -2,7 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { TreatmentService } from './treatment.service';
 import { ApiOperation } from '@nestjs/swagger';
 
-@Controller('treatment')
+@Controller('treatments')
 export class TreatmentController {
   constructor(private service: TreatmentService) {}
 
