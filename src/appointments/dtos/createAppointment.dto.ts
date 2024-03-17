@@ -4,10 +4,6 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateAppointMentDto {
   @ApiProperty()
   @IsString()
-  userId: string;
-
-  @ApiProperty()
-  @IsString()
   doctorId: string;
 
   @ApiProperty()

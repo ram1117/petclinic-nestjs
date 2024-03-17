@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreatePetDto {
   @ApiProperty()
   @IsString()
-  @MinLength(4)
+  @MinLength(3)
   name: string;
 
   @ApiProperty()

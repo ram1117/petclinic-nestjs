@@ -16,8 +16,16 @@ export class UsersService {
   }
 
   async findbyId(id: string) {
+    const date = new Date();
     const user = await this.db.user.findFirstOrThrow({
       where: { id },
+      include: {
+        pets: { include: { petType: true } },
+        appoinments: {
+          include: { slot: true, doctor: true },
+          where: { slot: { slot: { gte: date } } },
+        },
+      },
     });
     return new UserEntity(user);
   }
