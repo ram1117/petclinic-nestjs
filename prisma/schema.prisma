@@ -101,5 +101,5 @@ model WorkDay {
   id       String @id @default(uuid())
   day      Int
   doctorId String
-  doctor   Doctor @relation(fields: [doctorId], references: [id])
+  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 }
