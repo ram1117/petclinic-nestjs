@@ -8,18 +8,20 @@ export class TreatmentService {
   async getTreatments() {
     const treatments = await this.repo.treatment.findMany({
       include: {
-        doctors: { include: { doctor: true } },
+        doctors: {
+          include: {
+            doctor: {
+              include: {
+                slots: {
+                  where: { available: true },
+                  orderBy: { slot: 'asc' },
+                },
+              },
+            },
+          },
+        },
       },
     });
-
-    const filteredData = treatments.map((treatment) => ({
-      ...treatment,
-      doctors: treatment.doctors.map((doctor) => ({
-        id: doctor.doctor.id,
-        name: doctor.doctor.name,
-      })),
-    }));
-
-    return filteredData;
+    return treatments;
   }
 }

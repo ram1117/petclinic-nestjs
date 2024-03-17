@@ -77,7 +77,7 @@ model TreatmentsOnDoctors {
 model Appointment {
   id          String    @id @default(uuid())
   slotId      String    @unique
-  slot        Slot      @relation(fields: [slotId], references: [id])
+  slot        Slot      @relation(fields: [slotId], references: [id], onDelete: Restrict)
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   petId       String
