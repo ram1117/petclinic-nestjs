@@ -4,6 +4,10 @@
 
 **Pet Clinic** is the backend NestJs application for a pet clinic management system. A user will be able to sign up, add pets to account, create appointments for treatments provided by the clinic. A scheduled event will run every Sunday to create appointment slots for each doctor
 
+## Live Demo
+
+A live version of the application is hosted [on Render](https://petclinic-nestjs.onrender.com/). The service is deployed in free tier and will not be instantly available. Please wait a few minutes for the application to start
+
 ## Getting Started
 
 ### Dependencies
